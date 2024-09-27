@@ -1,0 +1,92 @@
+`MIGRATE E MAKEMIGRATIONS`
+
+1. `python manage.py makemigrations polls`:
+
+   - Este comando cria novas migrações baseadas nas mudanças detectadas nos modelos da aplicação 'polls'.
+   - Ele gera arquivos Python no diretório `migrations` da sua aplicação.
+   - Não altera o banco de dados diretamente.
+   - É como preparar um plano de mudanças para o banco de dados.
+
+2. `python manage.py migrate`:
+
+   - Este comando aplica as migrações pendentes ao banco de dados.
+   - Ele executa as mudanças definidas nos arquivos de migração.
+   - Atualiza efetivamente a estrutura do banco de dados.
+   - Aplica as migrações de todas as aplicações listadas em INSTALLED_APPS, não apenas 'polls'.
+
+Principais diferenças:
+
+1. Propósito:
+   - `makemigrations`: Cria instruções para mudanças.
+   - `migrate`: Executa essas instruções no banco de dados.
+
+2. Escopo:
+   - `makemigrations polls`: Foca apenas na aplicação 'polls'.
+   - `migrate`: Aplica migrações de todas as aplicações, a menos que especificado de outra forma.
+
+3. Efeito no banco de dados:
+   - `makemigrations`: Não altera o banco de dados.
+   - `migrate`: Modifica a estrutura do banco de dados.
+
+4. Momento de uso:
+   - `makemigrations`: Após alterar seus modelos (classes em `models.py`).
+   - `migrate`: Após criar novas migrações ou ao configurar um novo ambiente.
+
+5. Resultado:
+   - `makemigrations`: Cria arquivos Python com instruções de migração.
+   - `migrate`: Atualiza o esquema do banco de dados.
+
+Em resumo, `makemigrations` é como planejar as mudanças, enquanto `migrate` é como executar essas mudanças. Geralmente, você usará esses comandos em sequência: primeiro `makemigrations` para criar as migrações, depois `migrate` para aplicá-las ao banco de dados.
+
+
+
+O comando `python manage.py sqlmigrate polls 0001` é uma ferramenta útil no Django que faz o seguinte:
+
+1. Exibição de SQL:
+   - Este comando mostra o SQL que será executado para uma migração específica.
+   - No caso, ele mostrará o SQL para a migração '0001' da aplicação 'polls'.
+
+2. Prévia das alterações:
+   - Permite que você veja exatamente quais mudanças serão feitas no banco de dados.
+   - É uma prévia, não executa realmente as alterações no banco de dados.
+
+3. Detalhamento da migração:
+   - Traduz as instruções Python da migração para comandos SQL específicos do seu banco de dados.
+
+4. Verificação de compatibilidade:
+   - Ajuda a verificar se a migração é compatível com o seu banco de dados.
+
+5. Aprendizado e depuração:
+   - Útil para entender como o Django converte seus modelos em estruturas de banco de dados.
+   - Ajuda na depuração de problemas relacionados a migrações.
+
+Exemplo de saída:
+```sql
+BEGIN;
+--
+-- Create model Question
+--
+CREATE TABLE "polls_question" (
+    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "question_text" varchar(200) NOT NULL,
+    "pub_date" datetime NOT NULL
+);
+--
+-- Create model Choice
+--
+CREATE TABLE "polls_choice" (
+    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "choice_text" varchar(200) NOT NULL,
+    "votes" integer NOT NULL,
+    "question_id" integer NOT NULL REFERENCES "polls_question" ("id") DEFERRABLE INITIALLY DEFERRED
+);
+CREATE INDEX "polls_choice_question_id_c5b4b260" ON "polls_choice" ("question_id");
+COMMIT;
+```
+
+Observações importantes:
+1. Este comando não executa o SQL, apenas o exibe.
+2. É útil para entender o impacto das suas migrações antes de aplicá-las.
+3. Pode ser usado para verificar se as migrações farão exatamente o que você espera.
+
+Use este comando quando quiser inspecionar o SQL de uma migração específica antes de aplicá-la com `python manage.py migrate`.

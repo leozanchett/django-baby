@@ -1,3 +1,0 @@
-python manage.py shell # para abrir o shell do django
-
-exit() # para sair do shell do django

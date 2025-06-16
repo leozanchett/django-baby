@@ -1,0 +1,21 @@
+# Comando para iniciar um projeto Django.
+django-admin startproject mysite djangotutorial
+
+# Comando para rodar a aplicação.
+py manage.py runserver
+
+# O comando migrate analisa a configuração INSTALLED_APPS e cria todas as tabelas de banco de dados 
+# necessárias de acordo com as configurações do banco de dados em seu mysite
+py manage.py migrate
+
+# O comando makemigrations cria novas migrações com base nas alterações detectadas nos seus modelos para uma app específica (neste caso, 'polls').
+py manage.py makemigrations polls
+
+# O comando sqlmigrate exibe as instruções SQL para uma migração específica (neste caso, a migração '0001' da app 'polls').
+py manage.py sqlmigrate polls 0001
+
+# O comando shell inicia um interpretador Python interativo com o ambiente do seu projeto Django carregado, permitindo interagir com seus modelos e outros componentes.
+py manage.py shell
+
+# Criando um superusuário.
+py manage.py createsuperuser

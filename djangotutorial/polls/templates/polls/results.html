@@ -1,0 +1,17 @@
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detalhes' question.id %}">Vote again?</a>
+<br>
+<a href="{% url 'polls:indess' %}">Back to Polls</a>
+
+{% if user.is_authenticated %}
+    <p>Thank you for voting, {{ user.username }}!</p>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">log in</a> to see your voting history.</p>
+{% endif %}

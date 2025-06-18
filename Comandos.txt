@@ -19,3 +19,6 @@ py manage.py shell
 
 # Criando um superusuário.
 py manage.py createsuperuser
+
+# Executando testes
+py manage.py test polls
